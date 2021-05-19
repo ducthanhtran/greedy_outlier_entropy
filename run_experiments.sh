@@ -1,6 +1,6 @@
 #!/bin/bash
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P )
-cd "$parent_path"
+parent_path=$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P)
+cd "${parent_path}"
 
 EXPERIMENTS_DIR="./experiments"
 mkdir -p ${EXPERIMENTS_DIR}
@@ -11,13 +11,13 @@ LYMPH_DATA="./data/lymphography.data"
 LYMPH_DATA_FEATURES="${FEATURES_DIR}/lymphography.data.features"
 declare -a LYMPH_RARE_CLASSES=([1]=0 [4]=0) # values of one are ignoarable, only needs to be non-empty
 echo "$(date -u): Running on lymphography data (${LYMPH_DATA_FEATURES})"
-
 echo "$(date -u): Preprocessing: ignore first column (class)"
 echo "$(date -u): Resulting features are located at ${LYMPH_DATA_FEATURES}"
 cut -d, -f1 --complement ${LYMPH_DATA} > ${LYMPH_DATA_FEATURES}
 
 # get total number of rare classes 1 and 4
-TOTAL_OUTLIERS=$(cut -f1 -d, ${LYMPH_DATA} | sort | uniq -c | sed 's/^ \+//g' | cut -f1 -d ' ' | sed '2,3d' | awk '{ SUM += $1} END {print SUM }')
+TOTAL_OUTLIERS=$(cut -f1 -d, ${LYMPH_DATA} | sort | uniq -c | sed 's/^ \+//g'\
+                    | cut -f1 -d ' ' | sed '2,3d' | awk '{ SUM += $1 } END { print SUM }')
 
 for k in 7 15 16 22 30; do
     echo -e "$(date -u): Running with k=${k}"
