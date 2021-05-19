@@ -17,5 +17,5 @@ download:
 	mkdir -p ./data/ &&\
 	wget -nc -P ./data/ https://archive.ics.uci.edu/ml/machine-learning-databases/lymphography/lymphography.data
 
-experiments: $(PROG)
+experiments: $(PROG) download
 	bash ./run_experiments.sh
